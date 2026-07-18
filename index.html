@@ -4,11 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>로또 번호 추천</title>
+    <script>
+      (() => {
+        let savedTheme;
+
+        try {
+          savedTheme = localStorage.getItem("theme");
+        } catch {
+          savedTheme = null;
+        }
+
+        const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+        const isValidTheme = savedTheme === "light" || savedTheme === "dark";
+        document.documentElement.dataset.theme = isValidTheme ? savedTheme : preferredTheme;
+      })();
+    </script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main class="app">
       <section class="card">
+        <button
+          id="themeToggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="라이트 모드로 전환"
+          aria-pressed="true"
+        >
+          <span class="theme-icon" aria-hidden="true">☀️</span>
+          <span class="theme-label">라이트 모드</span>
+        </button>
         <p class="eyebrow">행운의 순간을 만나보세요</p>
         <h1>로또 번호 추천 사이트</h1>
         <p class="subtitle">

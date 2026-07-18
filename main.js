@@ -1,6 +1,32 @@
 const resultsEl = document.getElementById("results");
 const countSelect = document.getElementById("count");
 const generateBtn = document.getElementById("generateBtn");
+const themeToggle = document.getElementById("themeToggle");
+const themeIcon = themeToggle.querySelector(".theme-icon");
+const themeLabel = themeToggle.querySelector(".theme-label");
+
+function updateThemeToggle(theme) {
+  const isDark = theme === "dark";
+  const nextThemeLabel = isDark ? "라이트 모드" : "다크 모드";
+
+  themeIcon.textContent = isDark ? "☀️" : "🌙";
+  themeLabel.textContent = nextThemeLabel;
+  themeToggle.setAttribute("aria-label", `${nextThemeLabel}로 전환`);
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+}
+
+function toggleTheme() {
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = nextTheme;
+
+  try {
+    localStorage.setItem("theme", nextTheme);
+  } catch {
+    // The selected theme still applies when browser storage is unavailable.
+  }
+
+  updateThemeToggle(nextTheme);
+}
 
 function generateLottoSet() {
   const numbers = Array.from({ length: 45 }, (_, index) => index + 1);
@@ -47,5 +73,7 @@ function renderResults() {
 
 generateBtn.addEventListener("click", renderResults);
 countSelect.addEventListener("change", renderResults);
+themeToggle.addEventListener("click", toggleTheme);
 
+updateThemeToggle(document.documentElement.dataset.theme);
 renderResults();

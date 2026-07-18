@@ -1,8 +1,36 @@
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   font-family: "Pretendard", "Noto Sans KR", sans-serif;
-  background: linear-gradient(135deg, #111827, #312e81);
-  color: #f9fafb;
+  --page-start: #fff7ed;
+  --page-end: #e0e7ff;
+  --text: #172033;
+  --muted: #5b6474;
+  --card: rgba(255, 255, 255, 0.82);
+  --card-border: rgba(71, 85, 105, 0.16);
+  --card-shadow: rgba(71, 85, 105, 0.2);
+  --set-bg: rgba(255, 255, 255, 0.58);
+  --set-border: rgba(71, 85, 105, 0.14);
+  --set-title: #9a3412;
+  --toggle-bg: rgba(255, 255, 255, 0.72);
+  --toggle-border: rgba(71, 85, 105, 0.18);
+  background: linear-gradient(135deg, var(--page-start), var(--page-end));
+  color: var(--text);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page-start: #111827;
+  --page-end: #312e81;
+  --text: #f9fafb;
+  --muted: #d1d5db;
+  --card: rgba(17, 24, 39, 0.85);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-shadow: rgba(0, 0, 0, 0.25);
+  --set-bg: rgba(255, 255, 255, 0.06);
+  --set-border: rgba(255, 255, 255, 0.1);
+  --set-title: #fde68a;
+  --toggle-bg: rgba(255, 255, 255, 0.08);
+  --toggle-border: rgba(255, 255, 255, 0.14);
 }
 
 * {
@@ -14,7 +42,9 @@ body {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #111827, #312e81);
+  background: linear-gradient(135deg, var(--page-start), var(--page-end));
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .app {
@@ -23,12 +53,36 @@ body {
 }
 
 .card {
-  background: rgba(17, 24, 39, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--card-border);
   border-radius: 24px;
   padding: 32px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 50px var(--card-shadow);
   backdrop-filter: blur(14px);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border: 1px solid var(--toggle-border);
+  background: var(--toggle-bg);
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.theme-toggle:focus-visible,
+select:focus-visible,
+#generateBtn:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 3px;
 }
 
 .eyebrow {
@@ -46,7 +100,7 @@ h1 {
 
 .subtitle {
   margin: 12px 0 24px;
-  color: #d1d5db;
+  color: var(--muted);
   line-height: 1.6;
 }
 
@@ -63,7 +117,7 @@ label {
 }
 
 select,
-button {
+#generateBtn {
   border: none;
   border-radius: 999px;
   padding: 10px 16px;
@@ -84,7 +138,8 @@ button {
   transition: transform 0.2s ease;
 }
 
-button:hover {
+#generateBtn:hover,
+.theme-toggle:hover {
   transform: translateY(-1px);
 }
 
@@ -100,8 +155,8 @@ button:hover {
 }
 
 .lotto-set {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--set-bg);
+  border: 1px solid var(--set-border);
   border-radius: 18px;
   padding: 16px;
 }
@@ -109,7 +164,7 @@ button:hover {
 .lotto-set h3 {
   margin: 0 0 12px;
   font-size: 1rem;
-  color: #fde68a;
+  color: var(--set-title);
 }
 
 .numbers {
@@ -140,8 +195,21 @@ button:hover {
     align-items: stretch;
   }
 
+  .theme-toggle {
+    position: static;
+    margin: 0 0 20px auto;
+  }
+
   .ball {
     width: 36px;
     height: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .card,
+  button {
+    transition: none;
   }
 }
