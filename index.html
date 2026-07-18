@@ -54,6 +54,65 @@
         </div>
 
         <div id="results" class="results" aria-live="polite"></div>
+
+        <section class="contact-section" aria-labelledby="contactTitle">
+          <div class="contact-heading">
+            <p class="eyebrow">PARTNERSHIP</p>
+            <h2 id="contactTitle">제휴 문의</h2>
+            <p>함께하고 싶은 제안이 있다면 편하게 남겨주세요.</p>
+          </div>
+
+          <form
+            class="contact-form"
+            action="https://formspree.io/f/mgogkkld"
+            method="POST"
+          >
+            <input type="hidden" name="_subject" value="로또 번호 추천 사이트 제휴 문의" />
+            <input
+              class="form-trap"
+              type="text"
+              name="_gotcha"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
+
+            <div class="form-field">
+              <label for="partnerName">이름 또는 회사명</label>
+              <input
+                id="partnerName"
+                name="name"
+                type="text"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label for="partnerEmail">이메일</label>
+              <input
+                id="partnerEmail"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="form-field form-field-wide">
+              <label for="partnerMessage">문의 내용</label>
+              <textarea
+                id="partnerMessage"
+                name="message"
+                rows="5"
+                placeholder="제휴 목적과 제안 내용을 알려주세요."
+                required
+              ></textarea>
+            </div>
+
+            <button class="contact-submit" type="submit">문의 보내기</button>
+          </form>
+        </section>
       </section>
     </main>
 

@@ -13,6 +13,8 @@
   --set-title: #9a3412;
   --toggle-bg: rgba(255, 255, 255, 0.72);
   --toggle-border: rgba(71, 85, 105, 0.18);
+  --input-bg: rgba(255, 255, 255, 0.78);
+  --input-border: rgba(71, 85, 105, 0.28);
   background: linear-gradient(135deg, var(--page-start), var(--page-end));
   color: var(--text);
 }
@@ -31,6 +33,8 @@
   --set-title: #fde68a;
   --toggle-bg: rgba(255, 255, 255, 0.08);
   --toggle-border: rgba(255, 255, 255, 0.14);
+  --input-bg: rgba(17, 24, 39, 0.58);
+  --input-border: rgba(255, 255, 255, 0.2);
 }
 
 * {
@@ -80,7 +84,10 @@ body {
 
 .theme-toggle:focus-visible,
 select:focus-visible,
-#generateBtn:focus-visible {
+#generateBtn:focus-visible,
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible,
+.contact-submit:focus-visible {
   outline: 3px solid #f59e0b;
   outline-offset: 3px;
 }
@@ -139,7 +146,8 @@ button {
 }
 
 #generateBtn:hover,
-.theme-toggle:hover {
+.theme-toggle:hover,
+.contact-submit:hover {
   transform: translateY(-1px);
 }
 
@@ -185,6 +193,78 @@ button {
   font-weight: 800;
 }
 
+.contact-section {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--card-border);
+}
+
+.contact-heading .eyebrow {
+  margin-bottom: 6px;
+}
+
+.contact-heading h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.contact-heading > p:last-child {
+  margin: 8px 0 20px;
+  color: var(--muted);
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-field {
+  display: grid;
+  gap: 8px;
+}
+
+.form-field-wide,
+.contact-submit {
+  grid-column: 1 / -1;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--input-bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+}
+
+.contact-form textarea::placeholder {
+  color: var(--muted);
+}
+
+.contact-submit {
+  justify-self: start;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 20px;
+}
+
+.form-trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
 @media (max-width: 600px) {
   .card {
     padding: 24px;
@@ -193,6 +273,10 @@ button {
   .controls {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .contact-form {
+    grid-template-columns: 1fr;
   }
 
   .theme-toggle {
