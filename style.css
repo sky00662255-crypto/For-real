@@ -265,6 +265,35 @@ button {
   clip-path: inset(50%);
 }
 
+.comments-section {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--card-border);
+}
+
+.comments-heading {
+  margin-bottom: 20px;
+}
+
+.comments-heading .eyebrow {
+  margin-bottom: 6px;
+}
+
+.comments-heading h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.comments-section noscript {
+  display: block;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.comments-section noscript a {
+  color: var(--set-title);
+}
+
 @media (max-width: 600px) {
   .card {
     padding: 24px;
