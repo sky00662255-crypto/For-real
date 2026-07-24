@@ -55,8 +55,6 @@ const acceptedAliases = {
 };
 
 const ui = {
-  playerName: document.querySelector("#playerName"),
-  englishName: document.querySelector("#englishName"),
   round: document.querySelector("#roundCounter"),
   form: document.querySelector("#answerForm"),
   feedback: document.querySelector("#feedback"),
@@ -245,8 +243,6 @@ function loadRound() {
   correctFields = new Set();
   revealedHints = 0;
 
-  ui.playerName.textContent = currentPlayer.ko;
-  ui.englishName.textContent = currentPlayer.en;
   ui.round.textContent = `ROUND ${String(round).padStart(2, "0")} / ${players.length}`;
   ui.attempts.textContent = `남은 기회 ${maxAttempts}회`;
   ui.feedback.textContent = "키를 입력하고 나머지 네 가지 정보를 선택해 보세요.";
@@ -315,14 +311,15 @@ ui.form.addEventListener("submit", (event) => {
       input.disabled = true;
     });
     ui.feedback.textContent =
-      `아쉽네요! 정답은 ${currentPlayer.nationality} · ${currentPlayer.height} cm · ` +
+      `아쉽네요! 선수는 ${currentPlayer.ko} (${currentPlayer.en})였습니다. ` +
+      `정답 정보는 ${currentPlayer.nationality} · ${currentPlayer.height} cm · ` +
       `${currentPlayer.team} · ${currentPlayer.hand} · #${currentPlayer.number}입니다.`;
     ui.feedback.className = "feedback wrong";
     ui.next.textContent = deck.length === 0 ? "새 게임 시작 →" : "다음 선수 →";
     ui.next.hidden = false;
   } else {
     const remaining = Object.keys(ui.inputs).length - correctFields.size;
-    ui.feedback.textContent = `초록색은 정답입니다. 빨간색 ${remaining}개 항목을 다시 선택하세요.`;
+    ui.feedback.textContent = `초록 원은 정답입니다. 회색 원 ${remaining}개 항목을 다시 확인하세요.`;
     ui.feedback.className = "feedback wrong";
     const firstWrong = activeFields.find((field) => !correctFields.has(field));
     ui.inputs[firstWrong]?.focus();
