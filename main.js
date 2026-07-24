@@ -1,16 +1,18 @@
 const players = [
-  { ko: "마이클 조던", en: "Michael Jordan", nationality: "미국", height: "198", team: "시카고 불스", hand: "오른손" },
-  { ko: "코비 브라이언트", en: "Kobe Bryant", nationality: "미국", height: "198", team: "LA 레이커스", hand: "오른손" },
-  { ko: "샤킬 오닐", en: "Shaquille O'Neal", nationality: "미국", height: "216", team: "LA 레이커스", hand: "오른손" },
-  { ko: "팀 던컨", en: "Tim Duncan", nationality: "미국", height: "211", team: "샌안토니오 스퍼스", hand: "오른손" },
-  { ko: "래리 버드", en: "Larry Bird", nationality: "미국", height: "206", team: "보스턴 셀틱스", hand: "오른손" },
-  { ko: "디르크 노비츠키", en: "Dirk Nowitzki", nationality: "독일", height: "213", team: "댈러스 매버릭스", hand: "오른손" },
-  { ko: "야오밍", en: "Yao Ming", nationality: "중국", height: "229", team: "휴스턴 로키츠", hand: "오른손" },
-  { ko: "마누 지노빌리", en: "Manu Ginobili", nationality: "아르헨티나", height: "198", team: "샌안토니오 스퍼스", hand: "왼손" },
-  { ko: "토니 파커", en: "Tony Parker", nationality: "프랑스", height: "188", team: "샌안토니오 스퍼스", hand: "오른손" },
-  { ko: "스티브 내시", en: "Steve Nash", nationality: "캐나다", height: "191", team: "피닉스 선스", hand: "오른손" },
-  { ko: "파우 가솔", en: "Pau Gasol", nationality: "스페인", height: "213", team: "LA 레이커스", hand: "오른손" },
-  { ko: "하킴 올라주원", en: "Hakeem Olajuwon", nationality: "나이지리아", height: "213", team: "휴스턴 로키츠", hand: "오른손" }
+  { ko: "루카 돈치치", en: "Luka Dončić", nationality: "슬로베니아", height: "203", team: "LA 레이커스", hand: "오른손" },
+  { ko: "니콜라 요키치", en: "Nikola Jokić", nationality: "세르비아", height: "211", team: "덴버 너기츠", hand: "오른손" },
+  { ko: "샤이 길저스알렉산더", en: "Shai Gilgeous-Alexander", nationality: "캐나다", height: "198", team: "오클라호마시티 썬더", hand: "오른손" },
+  { ko: "빅터 웸반야마", en: "Victor Wembanyama", nationality: "프랑스", height: "224", team: "샌안토니오 스퍼스", hand: "오른손" },
+  { ko: "야니스 아데토쿤보", en: "Giannis Antetokounmpo", nationality: "그리스", height: "211", team: "마이애미 히트", hand: "오른손" },
+  { ko: "제이슨 테이텀", en: "Jayson Tatum", nationality: "미국", height: "203", team: "보스턴 셀틱스", hand: "오른손" },
+  { ko: "앤서니 에드워즈", en: "Anthony Edwards", nationality: "미국", height: "193", team: "미네소타 팀버울브스", hand: "오른손" },
+  { ko: "케이드 커닝햄", en: "Cade Cunningham", nationality: "미국", height: "198", team: "디트로이트 피스톤스", hand: "오른손" },
+  { ko: "알페렌 센군", en: "Alperen Şengün", nationality: "튀르키예", height: "211", team: "휴스턴 로키츠", hand: "오른손" },
+  { ko: "파올로 반케로", en: "Paolo Banchero", nationality: "미국", height: "208", team: "올랜도 매직", hand: "오른손" },
+  { ko: "데빈 부커", en: "Devin Booker", nationality: "미국", height: "196", team: "피닉스 선스", hand: "오른손" },
+  { ko: "제일런 브런슨", en: "Jalen Brunson", nationality: "미국", height: "188", team: "뉴욕 닉스", hand: "왼손" },
+  { ko: "디애런 팍스", en: "De'Aaron Fox", nationality: "미국", height: "191", team: "샌안토니오 스퍼스", hand: "왼손" },
+  { ko: "스테픈 커리", en: "Stephen Curry", nationality: "미국", height: "188", team: "골든스테이트 워리어스", hand: "오른손" }
 ];
 
 const fieldNames = {
@@ -20,6 +22,36 @@ const fieldNames = {
   hand: "주로 쓰는 손"
 };
 const maxAttempts = 6;
+const acceptedAliases = {
+  nationality: {
+    미국: ["usa", "unitedstates", "미합중국"],
+    캐나다: ["canada"],
+    프랑스: ["france"],
+    그리스: ["greece"],
+    세르비아: ["serbia"],
+    슬로베니아: ["slovenia"],
+    튀르키예: ["터키", "turkey", "turkiye"]
+  },
+  team: {
+    "LA 레이커스": ["레이커스", "lal", "losangeleslakers"],
+    "덴버 너기츠": ["너기츠", "denvernuggets"],
+    "오클라호마시티 썬더": ["오클라호마시티", "오클라호마 썬더", "썬더", "okc"],
+    "샌안토니오 스퍼스": ["샌안토니오", "스퍼스", "sanantoniospurs"],
+    "마이애미 히트": ["마이애미", "히트", "miamiheat"],
+    "보스턴 셀틱스": ["보스턴", "셀틱스", "bostonceltics"],
+    "미네소타 팀버울브스": ["미네소타", "팀버울브스", "minnesotatimberwolves"],
+    "디트로이트 피스톤스": ["디트로이트", "피스톤스", "detroitpistons"],
+    "휴스턴 로키츠": ["휴스턴", "로키츠", "houstonrockets"],
+    "올랜도 매직": ["올랜도", "매직", "orlandomagic"],
+    "피닉스 선스": ["피닉스", "선스", "phoenixsuns"],
+    "뉴욕 닉스": ["뉴욕", "닉스", "newyorkknicks"],
+    "골든스테이트 워리어스": ["골든스테이트", "워리어스", "goldenstatewarriors"]
+  },
+  hand: {
+    오른손: ["오른", "right", "righthand"],
+    왼손: ["왼", "left", "lefthand"]
+  }
+};
 
 const ui = {
   playerName: document.querySelector("#playerName"),
@@ -69,7 +101,10 @@ function isFieldCorrect(field, value) {
     return value.replace(/\D/g, "") === currentPlayer.height;
   }
 
-  return normalize(value) === normalize(currentPlayer[field]);
+  const guess = normalize(value);
+  const answer = currentPlayer[field];
+  const aliases = acceptedAliases[field]?.[answer] ?? [];
+  return guess === normalize(answer) || aliases.some((alias) => guess === normalize(alias));
 }
 
 function setFieldState(field, isCorrect) {
