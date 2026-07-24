@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="국적, 키, 소속팀, 주로 쓰는 손을 입력해 최근 NBA 스타의 프로필을 맞혀 보세요."
+      content="국적, 키, 소속팀, 주로 쓰는 손을 객관식으로 골라 최근 NBA 스타의 프로필을 맞혀 보세요."
     />
     <title>WHO'S THAT BALLER? — 농구선수 맞히기</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,7 +32,7 @@
           <h1 id="gameTitle">WHO'S THAT<br /><span>BALLER?</span></h1>
         </div>
         <p class="intro">
-          선수의 국적, 키, 대표 소속팀, 주로 쓰는 손을 직접 입력하세요.
+          선수의 국적, 키, 대표 소속팀, 주로 쓰는 손을 보기에서 고르세요.
           여섯 번 안에 모든 정보를 맞히면 승리합니다.
         </p>
       </section>
@@ -63,53 +63,52 @@
             <div class="clue-grid">
               <label class="clue" data-number="1" for="nationalityInput">
                 <span class="clue-label"><span aria-hidden="true">●</span> 국적</span>
-                <input
+                <select
                   class="clue-input"
                   id="nationalityInput"
-                  type="text"
-                  autocomplete="off"
-                  placeholder="예: 미국"
-                />
+                  data-field="nationality"
+                >
+                  <option value="">국적 선택</option>
+                </select>
                 <span class="result-icon" aria-hidden="true"></span>
               </label>
               <label class="clue" data-number="2" for="heightInput">
                 <span class="clue-label"><span aria-hidden="true">↕</span> 키</span>
-                <input
+                <select
                   class="clue-input"
                   id="heightInput"
-                  type="text"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  placeholder="예: 198"
-                />
+                  data-field="height"
+                >
+                  <option value="">키 선택</option>
+                </select>
                 <span class="result-icon" aria-hidden="true"></span>
               </label>
               <label class="clue" data-number="3" for="teamInput">
                 <span class="clue-label"><span aria-hidden="true">◆</span> 대표 소속팀</span>
-                <input
+                <select
                   class="clue-input"
                   id="teamInput"
-                  type="text"
-                  autocomplete="off"
-                  placeholder="예: 시카고 불스"
-                />
+                  data-field="team"
+                >
+                  <option value="">소속팀 선택</option>
+                </select>
                 <span class="result-icon" aria-hidden="true"></span>
               </label>
               <label class="clue" data-number="4" for="handInput">
                 <span class="clue-label"><span aria-hidden="true">✋</span> 주로 쓰는 손</span>
-                <input
+                <select
                   class="clue-input"
                   id="handInput"
-                  type="text"
-                  autocomplete="off"
-                  placeholder="오른손 또는 왼손"
-                />
+                  data-field="hand"
+                >
+                  <option value="">사용 손 선택</option>
+                </select>
                 <span class="result-icon" aria-hidden="true"></span>
               </label>
             </div>
 
             <div class="answer-actions">
-              <button class="primary-button" type="submit">입력한 정보 확인</button>
+              <button class="primary-button" type="submit">선택한 정보 확인</button>
               <span class="attempt-count" id="attemptCount">남은 기회 6회</span>
             </div>
             <p class="feedback" id="feedback" aria-live="polite"></p>

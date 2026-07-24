@@ -34,7 +34,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -309,9 +310,20 @@ h1 span {
   outline: 0;
   background: transparent;
   color: var(--ink);
+  cursor: pointer;
   font-size: clamp(1rem, 2.4vw, 1.35rem);
   font-weight: 900;
   letter-spacing: -0.045em;
+}
+
+.clue-input option {
+  background: #1a1a18;
+  color: var(--ink);
+}
+
+.clue-input:disabled {
+  cursor: default;
+  opacity: 1;
 }
 
 .clue-input::placeholder {

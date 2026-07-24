@@ -96,6 +96,24 @@ function normalize(value) {
   return value.toLocaleLowerCase().replace(/[^a-z0-9가-힣]/g, "");
 }
 
+function populateChoices() {
+  Object.entries(ui.inputs).forEach(([field, select]) => {
+    const values = [...new Set(players.map((player) => player[field]))];
+    values.sort((first, second) =>
+      field === "height"
+        ? Number(first) - Number(second)
+        : first.localeCompare(second, "ko")
+    );
+
+    values.forEach((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = field === "height" ? `${value} cm` : value;
+      select.appendChild(option);
+    });
+  });
+}
+
 function isFieldCorrect(field, value) {
   if (field === "height") {
     return value.replace(/\D/g, "") === currentPlayer.height;
@@ -191,7 +209,7 @@ function loadRound() {
   ui.englishName.textContent = currentPlayer.en;
   ui.round.textContent = `ROUND ${String(round).padStart(2, "0")} / ${players.length}`;
   ui.attempts.textContent = `남은 기회 ${maxAttempts}회`;
-  ui.feedback.textContent = "네 가지 정보를 모두 입력한 뒤 확인해 보세요.";
+  ui.feedback.textContent = "네 가지 정보를 모두 선택한 뒤 확인해 보세요.";
   ui.feedback.className = "feedback";
   ui.history.replaceChildren();
   ui.next.hidden = true;
@@ -211,7 +229,7 @@ ui.form.addEventListener("submit", (event) => {
   );
 
   if (hasEmptyInput) {
-    ui.feedback.textContent = "아직 맞히지 않은 모든 항목을 입력해 주세요.";
+    ui.feedback.textContent = "아직 맞히지 않은 모든 항목을 선택해 주세요.";
     ui.feedback.className = "feedback wrong";
     return;
   }
@@ -258,11 +276,10 @@ ui.form.addEventListener("submit", (event) => {
     ui.next.hidden = false;
   } else {
     const remaining = Object.keys(ui.inputs).length - correctFields.size;
-    ui.feedback.textContent = `초록색은 정답입니다. 빨간색 ${remaining}개 항목을 다시 입력하세요.`;
+    ui.feedback.textContent = `초록색은 정답입니다. 빨간색 ${remaining}개 항목을 다시 선택하세요.`;
     ui.feedback.className = "feedback wrong";
     const firstWrong = activeFields.find((field) => !correctFields.has(field));
     ui.inputs[firstWrong]?.focus();
-    ui.inputs[firstWrong]?.select();
   }
 
   updateStats();
@@ -270,6 +287,7 @@ ui.form.addEventListener("submit", (event) => {
 
 ui.next.addEventListener("click", loadRound);
 
+populateChoices();
 deck = shuffle(players);
 loadRound();
 updateStats();
