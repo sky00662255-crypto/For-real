@@ -7,11 +7,11 @@
       name="description"
       content="국적, 키, 소속팀, 주로 쓰는 손을 객관식으로 골라 최근 NBA 스타의 프로필을 맞혀 보세요."
     />
-    <title>WHO'S THAT BALLER? — 농구선수 맞히기</title>
+    <title>HOOP GRID — NBA 선수 프로필 맞히기</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -19,17 +19,17 @@
   <body>
     <main class="shell">
       <header class="topbar">
-        <a class="brand" href="./" aria-label="Full Court Quiz 처음으로">
-          <span class="brand-ball" aria-hidden="true">⌁</span>
-          FULL COURT QUIZ
+        <a class="brand" href="./" aria-label="Hoop Grid 처음으로">
+          <span class="brand-ball" aria-hidden="true">●</span>
+          HOOP GRID
         </a>
         <div class="round-counter" id="roundCounter">ROUND 01 / 14</div>
       </header>
 
       <section class="hero" aria-labelledby="gameTitle">
         <div>
-          <p class="kicker">CURRENT NBA STARS QUIZ</p>
-          <h1 id="gameTitle">WHO'S THAT<br /><span>BALLER?</span></h1>
+          <p class="kicker">NBA PROFILE PUZZLE</p>
+          <h1 id="gameTitle">HOOP <span>GRID</span></h1>
         </div>
         <p class="intro">
           선수의 국적, 키, 대표 소속팀, 주로 쓰는 손을 보기에서 고르세요.
@@ -57,6 +57,22 @@
               <span>손</span>
             </div>
             <div id="guessHistory" class="guess-history" aria-live="polite"></div>
+          </section>
+
+          <section class="hint-box" aria-labelledby="hintTitle">
+            <div class="hint-heading">
+              <div>
+                <span class="hint-eyebrow">NEED A CLUE?</span>
+                <h3 id="hintTitle">힌트</h3>
+              </div>
+              <button class="hint-button" id="hintButton" type="button">
+                힌트 하나 보기
+              </button>
+            </div>
+            <div class="hint-progress">
+              사용한 힌트 <strong id="hintCount">0/4</strong>
+            </div>
+            <ul class="hint-list" id="hintList" aria-live="polite"></ul>
           </section>
 
           <form id="answerForm">
@@ -135,10 +151,10 @@
           </section>
 
           <section class="tip-card">
-            <strong>COURT NOTE</strong>
+            <strong>HOW TO PLAY</strong>
             <p>
-              초록색은 정답, 빨간색은 오답입니다. 키 옆의 ↑는 정답이 더
-              크다는 뜻이고 ↓는 더 작다는 뜻입니다.
+              여섯 번 안에 네 가지 정보를 맞히세요. 초록 타일은 정답,
+              빨간 타일은 오답이며 ↑와 ↓는 정답 키의 방향입니다.
             </p>
           </section>
 
@@ -149,7 +165,7 @@
       </section>
 
       <footer>
-        <span>FULL COURT QUIZ</span>
+        <span>HOOP GRID</span>
         <span>최근 NBA 스타 14명의 프로필 도전</span>
       </footer>
     </main>

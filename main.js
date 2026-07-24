@@ -1,18 +1,18 @@
 const players = [
-  { ko: "루카 돈치치", en: "Luka Dončić", nationality: "슬로베니아", height: "203", team: "LA 레이커스", hand: "오른손" },
-  { ko: "니콜라 요키치", en: "Nikola Jokić", nationality: "세르비아", height: "211", team: "덴버 너기츠", hand: "오른손" },
-  { ko: "샤이 길저스알렉산더", en: "Shai Gilgeous-Alexander", nationality: "캐나다", height: "198", team: "오클라호마시티 썬더", hand: "오른손" },
-  { ko: "빅터 웸반야마", en: "Victor Wembanyama", nationality: "프랑스", height: "224", team: "샌안토니오 스퍼스", hand: "오른손" },
-  { ko: "야니스 아데토쿤보", en: "Giannis Antetokounmpo", nationality: "그리스", height: "211", team: "마이애미 히트", hand: "오른손" },
-  { ko: "제이슨 테이텀", en: "Jayson Tatum", nationality: "미국", height: "203", team: "보스턴 셀틱스", hand: "오른손" },
-  { ko: "앤서니 에드워즈", en: "Anthony Edwards", nationality: "미국", height: "193", team: "미네소타 팀버울브스", hand: "오른손" },
-  { ko: "케이드 커닝햄", en: "Cade Cunningham", nationality: "미국", height: "198", team: "디트로이트 피스톤스", hand: "오른손" },
-  { ko: "알페렌 센군", en: "Alperen Şengün", nationality: "튀르키예", height: "211", team: "휴스턴 로키츠", hand: "오른손" },
-  { ko: "파올로 반케로", en: "Paolo Banchero", nationality: "미국", height: "208", team: "올랜도 매직", hand: "오른손" },
-  { ko: "데빈 부커", en: "Devin Booker", nationality: "미국", height: "196", team: "피닉스 선스", hand: "오른손" },
-  { ko: "제일런 브런슨", en: "Jalen Brunson", nationality: "미국", height: "188", team: "뉴욕 닉스", hand: "왼손" },
-  { ko: "디애런 팍스", en: "De'Aaron Fox", nationality: "미국", height: "191", team: "샌안토니오 스퍼스", hand: "왼손" },
-  { ko: "스테픈 커리", en: "Stephen Curry", nationality: "미국", height: "188", team: "골든스테이트 워리어스", hand: "오른손" }
+  { ko: "루카 돈치치", en: "Luka Dončić", nationality: "슬로베니아", height: "203", team: "LA 레이커스", hand: "오른손", position: "가드·포워드", region: "유럽", conference: "서부" },
+  { ko: "니콜라 요키치", en: "Nikola Jokić", nationality: "세르비아", height: "211", team: "덴버 너기츠", hand: "오른손", position: "센터", region: "유럽", conference: "서부" },
+  { ko: "샤이 길저스알렉산더", en: "Shai Gilgeous-Alexander", nationality: "캐나다", height: "198", team: "오클라호마시티 썬더", hand: "오른손", position: "가드", region: "북아메리카", conference: "서부" },
+  { ko: "빅터 웸반야마", en: "Victor Wembanyama", nationality: "프랑스", height: "224", team: "샌안토니오 스퍼스", hand: "오른손", position: "포워드·센터", region: "유럽", conference: "서부" },
+  { ko: "야니스 아데토쿤보", en: "Giannis Antetokounmpo", nationality: "그리스", height: "211", team: "마이애미 히트", hand: "오른손", position: "포워드", region: "유럽", conference: "동부" },
+  { ko: "제이슨 테이텀", en: "Jayson Tatum", nationality: "미국", height: "203", team: "보스턴 셀틱스", hand: "오른손", position: "포워드·가드", region: "북아메리카", conference: "동부" },
+  { ko: "앤서니 에드워즈", en: "Anthony Edwards", nationality: "미국", height: "193", team: "미네소타 팀버울브스", hand: "오른손", position: "가드", region: "북아메리카", conference: "서부" },
+  { ko: "케이드 커닝햄", en: "Cade Cunningham", nationality: "미국", height: "198", team: "디트로이트 피스톤스", hand: "오른손", position: "가드", region: "북아메리카", conference: "동부" },
+  { ko: "알페렌 센군", en: "Alperen Şengün", nationality: "튀르키예", height: "211", team: "휴스턴 로키츠", hand: "오른손", position: "센터", region: "유럽", conference: "서부" },
+  { ko: "파올로 반케로", en: "Paolo Banchero", nationality: "미국", height: "208", team: "올랜도 매직", hand: "오른손", position: "포워드", region: "북아메리카", conference: "동부" },
+  { ko: "데빈 부커", en: "Devin Booker", nationality: "미국", height: "196", team: "피닉스 선스", hand: "오른손", position: "가드", region: "북아메리카", conference: "서부" },
+  { ko: "제일런 브런슨", en: "Jalen Brunson", nationality: "미국", height: "188", team: "뉴욕 닉스", hand: "왼손", position: "가드", region: "북아메리카", conference: "동부" },
+  { ko: "디애런 팍스", en: "De'Aaron Fox", nationality: "미국", height: "191", team: "샌안토니오 스퍼스", hand: "왼손", position: "가드", region: "북아메리카", conference: "서부" },
+  { ko: "스테픈 커리", en: "Stephen Curry", nationality: "미국", height: "188", team: "골든스테이트 워리어스", hand: "오른손", position: "가드", region: "북아메리카", conference: "서부" }
 ];
 
 const fieldNames = {
@@ -61,6 +61,9 @@ const ui = {
   feedback: document.querySelector("#feedback"),
   attempts: document.querySelector("#attemptCount"),
   history: document.querySelector("#guessHistory"),
+  hintButton: document.querySelector("#hintButton"),
+  hintCount: document.querySelector("#hintCount"),
+  hintList: document.querySelector("#hintList"),
   score: document.querySelector("#score"),
   streak: document.querySelector("#streak"),
   best: document.querySelector("#best"),
@@ -82,6 +85,7 @@ let streak = 0;
 let best = 0;
 let roundFinished = false;
 let correctFields = new Set();
+let revealedHints = 0;
 
 function shuffle(items) {
   const copy = [...items];
@@ -98,12 +102,15 @@ function normalize(value) {
 
 function populateChoices() {
   Object.entries(ui.inputs).forEach(([field, select]) => {
-    const values = [...new Set(players.map((player) => player[field]))];
-    values.sort((first, second) =>
+    const values =
       field === "height"
-        ? Number(first) - Number(second)
-        : first.localeCompare(second, "ko")
-    );
+        ? Array.from(
+            { length: Math.max(...players.map((player) => Number(player.height))) + 1 },
+            (_, height) => String(height)
+          )
+        : [...new Set(players.map((player) => player[field]))].sort((first, second) =>
+            first.localeCompare(second, "ko")
+          );
 
     values.forEach((value) => {
       const option = document.createElement("option");
@@ -183,6 +190,33 @@ function updateStats() {
   ui.best.textContent = best;
 }
 
+function getHints() {
+  const height = Number(currentPlayer.height);
+  const rangeStart = Math.floor(height / 10) * 10;
+  return [
+    `포지션은 ${currentPlayer.position}입니다.`,
+    `국적은 ${currentPlayer.region} 지역입니다.`,
+    `키는 ${rangeStart}–${rangeStart + 9}cm 사이입니다.`,
+    `소속팀은 ${currentPlayer.conference} 컨퍼런스입니다.`
+  ];
+}
+
+function revealHint() {
+  const hints = getHints();
+  if (revealedHints >= hints.length || roundFinished) return;
+
+  const item = document.createElement("li");
+  item.textContent = hints[revealedHints];
+  ui.hintList.appendChild(item);
+  revealedHints += 1;
+  ui.hintCount.textContent = `${revealedHints}/${hints.length}`;
+
+  if (revealedHints === hints.length) {
+    ui.hintButton.disabled = true;
+    ui.hintButton.textContent = "힌트를 모두 사용했어요";
+  }
+}
+
 function resetFields() {
   Object.values(ui.inputs).forEach((input) => {
     input.value = "";
@@ -204,6 +238,7 @@ function loadRound() {
   attempts = 0;
   roundFinished = false;
   correctFields = new Set();
+  revealedHints = 0;
 
   ui.playerName.textContent = currentPlayer.ko;
   ui.englishName.textContent = currentPlayer.en;
@@ -212,6 +247,10 @@ function loadRound() {
   ui.feedback.textContent = "네 가지 정보를 모두 선택한 뒤 확인해 보세요.";
   ui.feedback.className = "feedback";
   ui.history.replaceChildren();
+  ui.hintList.replaceChildren();
+  ui.hintCount.textContent = "0/4";
+  ui.hintButton.disabled = false;
+  ui.hintButton.textContent = "힌트 하나 보기";
   ui.next.hidden = true;
   resetFields();
   ui.inputs.nationality.focus();
@@ -256,6 +295,7 @@ ui.form.addEventListener("submit", (event) => {
 
   if (correctFields.size === Object.keys(ui.inputs).length) {
     roundFinished = true;
+    ui.hintButton.disabled = true;
     streak += 1;
     best = Math.max(best, streak);
     ui.feedback.textContent = `퍼펙트! ${currentPlayer.ko}의 정보를 모두 맞혔습니다.`;
@@ -264,6 +304,7 @@ ui.form.addEventListener("submit", (event) => {
     ui.next.hidden = false;
   } else if (attempts >= maxAttempts) {
     roundFinished = true;
+    ui.hintButton.disabled = true;
     streak = 0;
     Object.values(ui.inputs).forEach((input) => {
       input.disabled = true;
@@ -286,6 +327,7 @@ ui.form.addEventListener("submit", (event) => {
 });
 
 ui.next.addEventListener("click", loadRound);
+ui.hintButton.addEventListener("click", revealHint);
 
 populateChoices();
 deck = shuffle(players);
