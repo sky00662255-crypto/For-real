@@ -1,79 +1,131 @@
-const resultsEl = document.getElementById("results");
-const countSelect = document.getElementById("count");
-const generateBtn = document.getElementById("generateBtn");
-const themeToggle = document.getElementById("themeToggle");
-const themeIcon = themeToggle.querySelector(".theme-icon");
-const themeLabel = themeToggle.querySelector(".theme-label");
+const players = [
+  { ko: "마이클 조던", en: "Michael Jordan", nationality: "미국 🇺🇸", height: "198 cm", team: "시카고 불스", hand: "오른손" },
+  { ko: "코비 브라이언트", en: "Kobe Bryant", nationality: "미국 🇺🇸", height: "198 cm", team: "LA 레이커스", hand: "오른손" },
+  { ko: "샤킬 오닐", en: "Shaquille O'Neal", nationality: "미국 🇺🇸", height: "216 cm", team: "LA 레이커스", hand: "오른손" },
+  { ko: "팀 던컨", en: "Tim Duncan", nationality: "미국 🇺🇸", height: "211 cm", team: "샌안토니오 스퍼스", hand: "오른손" },
+  { ko: "래리 버드", en: "Larry Bird", nationality: "미국 🇺🇸", height: "206 cm", team: "보스턴 셀틱스", hand: "오른손" },
+  { ko: "디르크 노비츠키", en: "Dirk Nowitzki", nationality: "독일 🇩🇪", height: "213 cm", team: "댈러스 매버릭스", hand: "오른손" },
+  { ko: "야오밍", en: "Yao Ming", nationality: "중국 🇨🇳", height: "229 cm", team: "휴스턴 로키츠", hand: "오른손" },
+  { ko: "마누 지노빌리", en: "Manu Ginobili", nationality: "아르헨티나 🇦🇷", height: "198 cm", team: "샌안토니오 스퍼스", hand: "왼손" },
+  { ko: "토니 파커", en: "Tony Parker", nationality: "프랑스 🇫🇷", height: "188 cm", team: "샌안토니오 스퍼스", hand: "오른손" },
+  { ko: "스티브 내시", en: "Steve Nash", nationality: "캐나다 🇨🇦", height: "191 cm", team: "피닉스 선스", hand: "오른손" },
+  { ko: "파우 가솔", en: "Pau Gasol", nationality: "스페인 🇪🇸", height: "213 cm", team: "LA 레이커스", hand: "오른손" },
+  { ko: "하킴 올라주원", en: "Hakeem Olajuwon", nationality: "나이지리아 🇳🇬", height: "213 cm", team: "휴스턴 로키츠", hand: "오른손" }
+];
 
-function updateThemeToggle(theme) {
-  const isDark = theme === "dark";
-  const nextThemeLabel = isDark ? "라이트 모드" : "다크 모드";
+const ui = {
+  nationality: document.querySelector("#nationality"),
+  height: document.querySelector("#height"),
+  team: document.querySelector("#team"),
+  hand: document.querySelector("#hand"),
+  round: document.querySelector("#roundCounter"),
+  form: document.querySelector("#answerForm"),
+  input: document.querySelector("#answerInput"),
+  feedback: document.querySelector("#feedback"),
+  score: document.querySelector("#score"),
+  streak: document.querySelector("#streak"),
+  best: document.querySelector("#best"),
+  next: document.querySelector("#nextButton")
+};
 
-  themeIcon.textContent = isDark ? "☀️" : "🌙";
-  themeLabel.textContent = nextThemeLabel;
-  themeToggle.setAttribute("aria-label", `${nextThemeLabel}로 전환`);
-  themeToggle.setAttribute("aria-pressed", String(isDark));
+let deck = [];
+let currentPlayer;
+let round = 0;
+let attempts = 0;
+let score = 0;
+let streak = 0;
+let best = 0;
+let answered = false;
+
+function shuffle(items) {
+  const copy = [...items];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
+  }
+  return copy;
 }
 
-function toggleTheme() {
-  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-  document.documentElement.dataset.theme = nextTheme;
+function normalize(value) {
+  return value.toLocaleLowerCase().replace(/[^a-z0-9가-힣]/g, "");
+}
 
-  try {
-    localStorage.setItem("theme", nextTheme);
-  } catch {
-    // The selected theme still applies when browser storage is unavailable.
+function isCorrectAnswer(answer) {
+  const guess = normalize(answer);
+  return guess === normalize(currentPlayer.ko) || guess === normalize(currentPlayer.en);
+}
+
+function updateStats() {
+  ui.score.textContent = score;
+  ui.streak.textContent = `${streak} 🔥`;
+  ui.best.textContent = best;
+}
+
+function loadRound() {
+  if (deck.length === 0) {
+    deck = shuffle(players);
+    round = 0;
   }
 
-  updateThemeToggle(nextTheme);
+  currentPlayer = deck.pop();
+  round += 1;
+  attempts = 0;
+  answered = false;
+
+  ui.nationality.textContent = currentPlayer.nationality;
+  ui.height.textContent = currentPlayer.height;
+  ui.team.textContent = currentPlayer.team;
+  ui.hand.textContent = currentPlayer.hand;
+  ui.round.textContent = `ROUND ${String(round).padStart(2, "0")} / ${players.length}`;
+  ui.feedback.textContent = "";
+  ui.feedback.className = "feedback";
+  ui.input.value = "";
+  ui.input.disabled = false;
+  ui.next.hidden = true;
+  ui.input.focus();
 }
 
-function generateLottoSet() {
-  const numbers = Array.from({ length: 45 }, (_, index) => index + 1);
-  const shuffled = numbers.sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 6).sort((a, b) => a - b);
+function finishRound(message, wasCorrect) {
+  answered = true;
+  ui.input.disabled = true;
+  ui.feedback.textContent = message;
+  ui.feedback.className = `feedback ${wasCorrect ? "correct" : "wrong"}`;
+  ui.next.textContent = deck.length === 0 ? "새 게임 시작 →" : "다음 선수 →";
+  ui.next.hidden = false;
+  updateStats();
 }
 
-function renderResults() {
-  const count = Number(countSelect.value);
-  resultsEl.innerHTML = "";
+ui.form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (answered) return;
 
-  const title = document.createElement("h2");
-  title.textContent = `${count}세트 추천 결과`;
-  resultsEl.appendChild(title);
+  const answer = ui.input.value.trim();
+  if (!answer) {
+    ui.feedback.textContent = "선수 이름을 먼저 입력해 주세요.";
+    ui.feedback.className = "feedback wrong";
+    ui.input.focus();
+    return;
+  }
 
-  const grid = document.createElement("div");
-  grid.className = "set-grid";
+  attempts += 1;
+  if (isCorrectAnswer(answer)) {
+    const earned = attempts === 1 ? 100 : 50;
+    score += earned;
+    streak += 1;
+    best = Math.max(best, streak);
+    finishRound(`정답! ${currentPlayer.ko}입니다. +${earned}점`, true);
+  } else if (attempts < 2) {
+    ui.feedback.textContent = "아쉽네요! 한 번 더 생각해 보세요. (남은 기회 1번)";
+    ui.feedback.className = "feedback wrong";
+    ui.input.select();
+  } else {
+    streak = 0;
+    finishRound(`정답은 ${currentPlayer.ko} (${currentPlayer.en})였습니다.`, false);
+  }
+});
 
-  Array.from({ length: count }, (_, index) => {
-    const set = generateLottoSet();
-    const card = document.createElement("article");
-    card.className = "lotto-set";
+ui.next.addEventListener("click", loadRound);
 
-    const heading = document.createElement("h3");
-    heading.textContent = `${index + 1}세트`;
-
-    const numbers = document.createElement("div");
-    numbers.className = "numbers";
-
-    set.forEach((number) => {
-      const ball = document.createElement("span");
-      ball.className = "ball";
-      ball.textContent = number;
-      numbers.appendChild(ball);
-    });
-
-    card.appendChild(heading);
-    card.appendChild(numbers);
-    grid.appendChild(card);
-  });
-
-  resultsEl.appendChild(grid);
-}
-
-generateBtn.addEventListener("click", renderResults);
-countSelect.addEventListener("change", renderResults);
-themeToggle.addEventListener("click", toggleTheme);
-
-updateThemeToggle(document.documentElement.dataset.theme);
-renderResults();
+deck = shuffle(players);
+loadRound();
+updateStats();

@@ -1,147 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>로또 번호 추천</title>
-    <script>
-      (() => {
-        let savedTheme;
-
-        try {
-          savedTheme = localStorage.getItem("theme");
-        } catch {
-          savedTheme = null;
-        }
-
-        const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-        const isValidTheme = savedTheme === "light" || savedTheme === "dark";
-        document.documentElement.dataset.theme = isValidTheme ? savedTheme : preferredTheme;
-      })();
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="국적, 키, 대표 소속팀, 주로 쓰는 손을 보고 전설적인 농구선수를 맞혀 보세요."
+    />
+    <title>WHO'S THAT BALLER? — 농구선수 맞히기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="app">
-      <section class="card">
-        <button
-          id="themeToggle"
-          class="theme-toggle"
-          type="button"
-          aria-label="라이트 모드로 전환"
-          aria-pressed="true"
-        >
-          <span class="theme-icon" aria-hidden="true">☀️</span>
-          <span class="theme-label">라이트 모드</span>
-        </button>
-        <p class="eyebrow">행운의 순간을 만나보세요</p>
-        <h1>로또 번호 추천 사이트</h1>
-        <p class="subtitle">
-          오늘의 운을 담아 랜덤하게 번호를 생성해 드립니다.
-        </p>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Full Court Quiz 처음으로">
+          <span class="brand-ball" aria-hidden="true">⌁</span>
+          FULL COURT QUIZ
+        </a>
+        <div class="round-counter" id="roundCounter">ROUND 01 / 12</div>
+      </header>
 
-        <div class="controls">
-          <label for="count">추천 세트 수</label>
-          <select id="count">
-            <option value="1">1세트</option>
-            <option value="2">2세트</option>
-            <option value="3">3세트</option>
-            <option value="4">4세트</option>
-          </select>
-          <button id="generateBtn">번호 생성하기</button>
+      <section class="hero" aria-labelledby="gameTitle">
+        <div>
+          <p class="kicker">BASKETBALL LEGENDS QUIZ</p>
+          <h1 id="gameTitle">WHO'S THAT<br /><span>BALLER?</span></h1>
+        </div>
+        <p class="intro">
+          네 가지 스카우팅 리포트를 읽고 선수를 맞혀 보세요.
+          한글 이름과 영문 이름 모두 정답으로 인정됩니다.
+        </p>
+      </section>
+
+      <section class="game-layout">
+        <div class="game-card">
+          <div class="card-header">
+            <h2>SCOUTING REPORT</h2>
+            <span class="difficulty">LEGENDS</span>
+          </div>
+
+          <div class="clue-grid">
+            <article class="clue" data-number="1">
+              <div class="clue-label"><span aria-hidden="true">●</span> 국적</div>
+              <p class="clue-value" id="nationality">-</p>
+            </article>
+            <article class="clue" data-number="2">
+              <div class="clue-label"><span aria-hidden="true">↕</span> 키</div>
+              <p class="clue-value" id="height">-</p>
+            </article>
+            <article class="clue" data-number="3">
+              <div class="clue-label"><span aria-hidden="true">◆</span> 대표 소속팀</div>
+              <p class="clue-value" id="team">-</p>
+            </article>
+            <article class="clue" data-number="4">
+              <div class="clue-label"><span aria-hidden="true">✋</span> 주로 쓰는 손</div>
+              <p class="clue-value" id="hand">-</p>
+            </article>
+          </div>
+
+          <form class="answer-area" id="answerForm">
+            <label class="answer-label" for="answerInput">선수 이름</label>
+            <div class="answer-row">
+              <input
+                id="answerInput"
+                type="text"
+                autocomplete="off"
+                placeholder="정답을 입력하세요"
+                aria-describedby="feedback"
+              />
+              <button class="primary-button" type="submit">정답 확인</button>
+            </div>
+            <p class="feedback" id="feedback" aria-live="polite"></p>
+          </form>
         </div>
 
-        <div id="results" class="results" aria-live="polite"></div>
-
-        <section class="contact-section" aria-labelledby="contactTitle">
-          <div class="contact-heading">
-            <p class="eyebrow">PARTNERSHIP</p>
-            <h2 id="contactTitle">제휴 문의</h2>
-            <p>함께하고 싶은 제안이 있다면 편하게 남겨주세요.</p>
-          </div>
-
-          <form
-            class="contact-form"
-            action="https://formspree.io/f/mgogkkld"
-            method="POST"
-          >
-            <input type="hidden" name="_subject" value="로또 번호 추천 사이트 제휴 문의" />
-            <input
-              class="form-trap"
-              type="text"
-              name="_gotcha"
-              tabindex="-1"
-              autocomplete="off"
-              aria-hidden="true"
-            />
-
-            <div class="form-field">
-              <label for="partnerName">이름 또는 회사명</label>
-              <input
-                id="partnerName"
-                name="name"
-                type="text"
-                autocomplete="name"
-                required
-              />
+        <aside class="side-panel" aria-label="게임 현황">
+          <section class="score-card">
+            <p class="score-title">YOUR SCORE</p>
+            <div class="score-main">
+              <strong id="score">0</strong>
+              <span>PTS</span>
             </div>
-
-            <div class="form-field">
-              <label for="partnerEmail">이메일</label>
-              <input
-                id="partnerEmail"
-                name="email"
-                type="email"
-                autocomplete="email"
-                required
-              />
+            <div class="stats">
+              <div class="stat">
+                <span>연속 정답</span>
+                <strong id="streak">0 🔥</strong>
+              </div>
+              <div class="stat">
+                <span>최고 기록</span>
+                <strong id="best">0</strong>
+              </div>
             </div>
+          </section>
 
-            <div class="form-field form-field-wide">
-              <label for="partnerMessage">문의 내용</label>
-              <textarea
-                id="partnerMessage"
-                name="message"
-                rows="5"
-                placeholder="제휴 목적과 제안 내용을 알려주세요."
-                required
-              ></textarea>
-            </div>
+          <section class="tip-card">
+            <strong>COURT NOTE</strong>
+            <p>
+              막히면 대표 소속팀과 주로 쓰는 손을 함께 생각해 보세요.
+              각 문제는 두 번까지 도전할 수 있습니다.
+            </p>
+          </section>
 
-            <button class="contact-submit" type="submit">문의 보내기</button>
-          </form>
-        </section>
-
-        <section class="comments-section" aria-labelledby="commentsTitle">
-          <div class="comments-heading">
-            <p class="eyebrow">COMMENTS</p>
-            <h2 id="commentsTitle">댓글</h2>
-          </div>
-          <div id="disqus_thread"></div>
-          <noscript>
-            댓글을 보려면 JavaScript를 활성화해 주세요.
-            <a href="https://disqus.com/?ref_noscript">Disqus에서 댓글 보기</a>
-          </noscript>
-        </section>
+          <button class="next-button" id="nextButton" type="button" hidden>
+            다음 선수 →
+          </button>
+        </aside>
       </section>
+
+      <footer>
+        <span>FULL COURT QUIZ</span>
+        <span>농구를 아는 당신을 위한 12개의 도전</span>
+      </footer>
     </main>
-
     <script src="main.js"></script>
-    <script>
-      var disqus_config = function () {
-        this.page.url = "https://for-real.pages.dev/";
-        this.page.identifier = "for-real-home";
-      };
-
-      (function () {
-        var d = document;
-        var s = d.createElement("script");
-        s.src = "https://sky0625.disqus.com/embed.js";
-        s.setAttribute("data-timestamp", String(+new Date()));
-        (d.head || d.body).appendChild(s);
-      })();
-    </script>
   </body>
 </html>
