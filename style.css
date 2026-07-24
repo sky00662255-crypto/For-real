@@ -185,7 +185,7 @@ h1 span {
 .board-labels,
 .guess-row {
   display: grid;
-  grid-template-columns: 0.9fr 0.7fr 1.4fr 0.65fr;
+  grid-template-columns: 0.85fr 0.65fr 1.25fr 0.58fr 0.62fr;
   gap: 6px;
 }
 
@@ -324,7 +324,7 @@ h1 span {
 
 .clue-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -603,6 +603,10 @@ footer {
     padding: 16px 12px;
   }
 
+  .clue-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .side-panel {
     grid-template-columns: 1fr;
   }
@@ -627,7 +631,7 @@ footer {
 
   .board-labels,
   .guess-row {
-    grid-template-columns: 0.85fr 0.65fr 1.3fr 0.6fr;
+    grid-template-columns: 0.78fr 0.58fr 1.12fr 0.52fr 0.56fr;
     gap: 3px;
   }
 

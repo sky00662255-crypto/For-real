@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="국적, 키, 소속팀, 주로 쓰는 손을 객관식으로 골라 최근 NBA 스타의 프로필을 맞혀 보세요."
+      content="국적, 키, 소속팀, 주로 쓰는 손과 등번호를 맞혀 최근 NBA 스타의 프로필을 완성해 보세요."
     />
     <title>HOOP GRID — NBA 선수 프로필 맞히기</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,8 +32,8 @@
           <h1 id="gameTitle">HOOP <span>GRID</span></h1>
         </div>
         <p class="intro">
-          선수의 국적, 키, 대표 소속팀, 주로 쓰는 손을 보기에서 고르세요.
-          여섯 번 안에 모든 정보를 맞히면 승리합니다.
+          선수의 국적, 키, 대표 소속팀, 주로 쓰는 손과 등번호를 맞혀보세요.
+          여섯 번 안에 다섯 가지 정보를 맞히면 승리합니다.
         </p>
       </section>
 
@@ -55,6 +55,7 @@
               <span>키</span>
               <span>소속팀</span>
               <span>손</span>
+              <span>등번호</span>
             </div>
             <div id="guessHistory" class="guess-history" aria-live="polite"></div>
           </section>
@@ -70,7 +71,7 @@
               </button>
             </div>
             <div class="hint-progress">
-              사용한 힌트 <strong id="hintCount">0/4</strong>
+              사용한 힌트 <strong id="hintCount">0/5</strong>
             </div>
             <ul class="hint-list" id="hintList" aria-live="polite"></ul>
           </section>
@@ -90,13 +91,17 @@
               </label>
               <label class="clue" data-number="2" for="heightInput">
                 <span class="clue-label"><span aria-hidden="true">↕</span> 키</span>
-                <select
+                <input
                   class="clue-input"
                   id="heightInput"
-                  data-field="height"
-                >
-                  <option value="">키 선택</option>
-                </select>
+                  type="number"
+                  min="0"
+                  max="224"
+                  step="1"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="cm 입력"
+                />
                 <span class="result-icon" aria-hidden="true"></span>
               </label>
               <label class="clue" data-number="3" for="teamInput">
@@ -118,6 +123,17 @@
                   data-field="hand"
                 >
                   <option value="">사용 손 선택</option>
+                </select>
+                <span class="result-icon" aria-hidden="true"></span>
+              </label>
+              <label class="clue" data-number="5" for="numberInput">
+                <span class="clue-label"><span aria-hidden="true">#</span> 등번호</span>
+                <select
+                  class="clue-input"
+                  id="numberInput"
+                  data-field="number"
+                >
+                  <option value="">등번호 선택</option>
                 </select>
                 <span class="result-icon" aria-hidden="true"></span>
               </label>
@@ -153,7 +169,7 @@
           <section class="tip-card">
             <strong>HOW TO PLAY</strong>
             <p>
-              여섯 번 안에 네 가지 정보를 맞히세요. 초록 타일은 정답,
+              여섯 번 안에 다섯 가지 정보를 맞히세요. 초록 타일은 정답,
               빨간 타일은 오답이며 ↑와 ↓는 정답 키의 방향입니다.
             </p>
           </section>
