@@ -107,12 +107,12 @@ function populateChoices() {
       return;
     }
 
-    const values = [...new Set(players.map((player) => player[field]))].sort(
-      (first, second) =>
-        field === "number"
-          ? Number(first) - Number(second)
-          : first.localeCompare(second, "ko")
-    );
+    const values =
+      field === "number"
+        ? Array.from({ length: 100 }, (_, number) => String(number))
+        : [...new Set(players.map((player) => player[field]))].sort(
+            (first, second) => first.localeCompare(second, "ko")
+          );
 
     values.forEach((value) => {
       const option = document.createElement("option");
