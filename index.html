@@ -32,48 +32,85 @@
           <h1 id="gameTitle">WHO'S THAT<br /><span>BALLER?</span></h1>
         </div>
         <p class="intro">
-          네 가지 스카우팅 리포트를 읽고 선수를 맞혀 보세요.
-          한글 이름과 영문 이름 모두 정답으로 인정됩니다.
+          선수의 국적, 키, 대표 소속팀, 주로 쓰는 손을 직접 입력하세요.
+          여섯 번 안에 모든 정보를 맞히면 승리합니다.
         </p>
       </section>
 
       <section class="game-layout">
         <div class="game-card">
           <div class="card-header">
-            <h2>SCOUTING REPORT</h2>
+            <div>
+              <p class="player-prompt">이 선수의 정보를 맞혀보세요</p>
+              <h2 id="playerName">-</h2>
+              <p class="english-name" id="englishName">-</p>
+            </div>
             <span class="difficulty">LEGENDS</span>
           </div>
 
-          <div class="clue-grid">
-            <article class="clue" data-number="1">
-              <div class="clue-label"><span aria-hidden="true">●</span> 국적</div>
-              <p class="clue-value" id="nationality">-</p>
-            </article>
-            <article class="clue" data-number="2">
-              <div class="clue-label"><span aria-hidden="true">↕</span> 키</div>
-              <p class="clue-value" id="height">-</p>
-            </article>
-            <article class="clue" data-number="3">
-              <div class="clue-label"><span aria-hidden="true">◆</span> 대표 소속팀</div>
-              <p class="clue-value" id="team">-</p>
-            </article>
-            <article class="clue" data-number="4">
-              <div class="clue-label"><span aria-hidden="true">✋</span> 주로 쓰는 손</div>
-              <p class="clue-value" id="hand">-</p>
-            </article>
-          </div>
+          <section class="guess-board" aria-labelledby="guessBoardTitle">
+            <h3 id="guessBoardTitle" class="board-title">GUESS HISTORY</h3>
+            <div class="board-labels" aria-hidden="true">
+              <span>국적</span>
+              <span>키</span>
+              <span>소속팀</span>
+              <span>손</span>
+            </div>
+            <div id="guessHistory" class="guess-history" aria-live="polite"></div>
+          </section>
 
-          <form class="answer-area" id="answerForm">
-            <label class="answer-label" for="answerInput">선수 이름</label>
-            <div class="answer-row">
-              <input
-                id="answerInput"
-                type="text"
-                autocomplete="off"
-                placeholder="정답을 입력하세요"
-                aria-describedby="feedback"
-              />
-              <button class="primary-button" type="submit">정답 확인</button>
+          <form id="answerForm">
+            <div class="clue-grid">
+              <label class="clue" data-number="1" for="nationalityInput">
+                <span class="clue-label"><span aria-hidden="true">●</span> 국적</span>
+                <input
+                  class="clue-input"
+                  id="nationalityInput"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="예: 미국"
+                />
+                <span class="result-icon" aria-hidden="true"></span>
+              </label>
+              <label class="clue" data-number="2" for="heightInput">
+                <span class="clue-label"><span aria-hidden="true">↕</span> 키</span>
+                <input
+                  class="clue-input"
+                  id="heightInput"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="예: 198"
+                />
+                <span class="result-icon" aria-hidden="true"></span>
+              </label>
+              <label class="clue" data-number="3" for="teamInput">
+                <span class="clue-label"><span aria-hidden="true">◆</span> 대표 소속팀</span>
+                <input
+                  class="clue-input"
+                  id="teamInput"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="예: 시카고 불스"
+                />
+                <span class="result-icon" aria-hidden="true"></span>
+              </label>
+              <label class="clue" data-number="4" for="handInput">
+                <span class="clue-label"><span aria-hidden="true">✋</span> 주로 쓰는 손</span>
+                <input
+                  class="clue-input"
+                  id="handInput"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="오른손 또는 왼손"
+                />
+                <span class="result-icon" aria-hidden="true"></span>
+              </label>
+            </div>
+
+            <div class="answer-actions">
+              <button class="primary-button" type="submit">입력한 정보 확인</button>
+              <span class="attempt-count" id="attemptCount">남은 기회 6회</span>
             </div>
             <p class="feedback" id="feedback" aria-live="polite"></p>
           </form>
@@ -101,8 +138,8 @@
           <section class="tip-card">
             <strong>COURT NOTE</strong>
             <p>
-              막히면 대표 소속팀과 주로 쓰는 손을 함께 생각해 보세요.
-              각 문제는 두 번까지 도전할 수 있습니다.
+              초록색은 정답, 빨간색은 오답입니다. 키 옆의 ↑는 정답이 더
+              크다는 뜻이고 ↓는 더 작다는 뜻입니다.
             </p>
           </section>
 

@@ -150,9 +150,23 @@ h1 span {
 }
 
 .card-header h2 {
-  margin: 0;
-  font-size: 1.2rem;
+  margin: 2px 0 0;
+  font-size: clamp(1.65rem, 4vw, 2.45rem);
   letter-spacing: -0.04em;
+}
+
+.player-prompt {
+  margin: 0;
+  color: var(--orange-soft);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.english-name {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
 }
 
 .difficulty {
@@ -162,6 +176,84 @@ h1 span {
   color: var(--lime);
   font-size: 0.72rem;
   font-weight: 900;
+}
+
+.guess-board {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  background: #11110f;
+}
+
+.board-title {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+}
+
+.board-labels,
+.guess-row {
+  display: grid;
+  grid-template-columns: 0.85fr 0.68fr 1.35fr 0.65fr;
+  gap: 6px;
+}
+
+.board-labels {
+  margin-bottom: 6px;
+  color: #74726c;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.guess-history {
+  display: grid;
+  gap: 6px;
+}
+
+.guess-cell {
+  display: flex;
+  min-width: 0;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 5px;
+  color: #fff;
+  font-size: clamp(0.68rem, 1.6vw, 0.82rem);
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
+  word-break: keep-all;
+  animation: tile-in 240ms ease both;
+}
+
+.guess-cell.correct {
+  background: #31834e;
+  border: 1px solid #64d889;
+}
+
+.guess-cell.wrong {
+  background: #8a3434;
+  border: 1px solid #e56b6b;
+}
+
+.height-arrow {
+  flex: none;
+  color: #fff;
+  font-size: 1rem;
+}
+
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: rotateX(75deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0);
+  }
 }
 
 .clue-grid {
@@ -177,6 +269,7 @@ h1 span {
   padding: 18px;
   border: 1px solid var(--line);
   background: #141412;
+  transition: border-color 180ms ease, background 180ms ease;
 }
 
 .clue::after {
@@ -204,49 +297,86 @@ h1 span {
   color: var(--orange);
 }
 
-.clue-value {
+.clue-input {
   position: relative;
   z-index: 1;
-  margin: 0;
-  font-size: clamp(1.15rem, 3vw, 1.65rem);
+  width: calc(100% - 38px);
+  min-width: 0;
+  padding: 5px 0 7px;
+  border: 0;
+  border-bottom: 2px solid #45453f;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: clamp(1rem, 2.4vw, 1.35rem);
   font-weight: 900;
   letter-spacing: -0.045em;
 }
 
-.answer-area {
-  margin-top: 22px;
+.clue-input::placeholder {
+  color: #5f5e59;
+  font-weight: 600;
 }
 
-.answer-label {
-  display: block;
-  margin-bottom: 9px;
-  font-size: 0.82rem;
-  font-weight: 800;
-}
-
-.answer-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
-}
-
-#answerInput {
-  min-width: 0;
-  padding: 15px 17px;
-  border: 1px solid var(--line);
-  border-radius: 0;
-  outline: none;
-  background: #10100f;
-  color: var(--ink);
-}
-
-#answerInput:focus {
+.clue-input:focus {
   border-color: var(--orange);
-  box-shadow: 0 0 0 3px rgba(255, 92, 40, 0.12);
 }
 
-#answerInput::placeholder {
-  color: #66655f;
+.result-icon {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 25px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.clue.is-correct {
+  border-color: #64d889;
+  background: rgba(56, 161, 105, 0.16);
+}
+
+.clue.is-correct .clue-input {
+  border-color: #64d889;
+  color: #a8f5bf;
+}
+
+.clue.is-correct .result-icon {
+  background: #64d889;
+  color: #092512;
+}
+
+.clue.is-wrong {
+  border-color: #f06464;
+  background: rgba(190, 55, 55, 0.16);
+}
+
+.clue.is-wrong .clue-input {
+  border-color: #f06464;
+}
+
+.clue.is-wrong .result-icon {
+  background: #f06464;
+  color: #2c0707;
+}
+
+.answer-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.attempt-count {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .primary-button,
@@ -259,7 +389,7 @@ h1 span {
 }
 
 .primary-button {
-  padding: 0 24px;
+  padding: 14px 24px;
 }
 
 .primary-button:hover,
@@ -270,7 +400,7 @@ h1 span {
 
 .primary-button:focus-visible,
 .next-button:focus-visible,
-#answerInput:focus-visible {
+.clue-input:focus-visible {
   outline: 3px solid var(--lime);
   outline-offset: 3px;
 }
@@ -421,6 +551,23 @@ footer {
   .clue-grid,
   .side-panel {
     grid-template-columns: 1fr;
+  }
+
+  .guess-board {
+    margin-inline: -10px;
+    padding: 10px;
+  }
+
+  .board-labels,
+  .guess-row {
+    grid-template-columns: 0.85fr 0.65fr 1.25fr 0.65fr;
+    gap: 4px;
+  }
+
+  .guess-cell {
+    min-height: 38px;
+    padding-inline: 3px;
+    font-size: 0.62rem;
   }
 
   .clue {
